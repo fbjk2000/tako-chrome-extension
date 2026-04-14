@@ -131,8 +131,13 @@
   function flush() {
     if (flushTimer) { clearTimeout(flushTimer); flushTimer = null; }
     if (queue.length === 0) return;
+    // Backend expects the source identity as flat top-level fields, not a
+    // nested object — see tako-core backend/listeners/webhook_ingest.py.
+    const ctx = sourceContext();
     const payload = {
-      source: sourceContext(),
+      source_url: ctx.url,
+      source_type: ctx.type,
+      source_name: ctx.name,
       observed_at: new Date().toISOString(),
       posts: queue.splice(0, queue.length),
     };
