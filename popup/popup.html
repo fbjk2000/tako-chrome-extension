@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tako Listener</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">Tako Listener</span>
+    </div>
+    <span id="status-pill" class="pill pill-muted">checking…</span>
+  </header>
+
+  <main>
+    <!-- View: Not paired -->
+    <section id="view-pair" hidden>
+      <h2>Pair with your Tako workspace</h2>
+      <ol class="steps">
+        <li>In Tako, open <b>Settings → Integrations → Pair extension</b>.</li>
+        <li>Copy the 4-letter user code shown there.</li>
+        <li>Paste it below and click <b>Pair</b>.</li>
+      </ol>
+
+      <label for="user-code-input">User code</label>
+      <input id="user-code-input" type="text" maxlength="12" autocomplete="off" spellcheck="false" placeholder="e.g. WXYZ-1234" />
+
+      <label for="api-base-input">Tako API base <span class="muted">(advanced)</span></label>
+      <input id="api-base-input" type="url" autocomplete="off" spellcheck="false" placeholder="https://app.tako.software" />
+
+      <button id="pair-btn" class="primary">Pair</button>
+      <p id="pair-error" class="error" hidden></p>
+    </section>
+
+    <!-- View: Waiting for Tako UI to confirm -->
+    <section id="view-waiting" hidden>
+      <h2>Almost done</h2>
+      <p>Return to Tako and click <b>Confirm pairing</b>. The token Tako shows can be pasted below if it isn't auto-delivered.</p>
+
+      <label for="token-input">Extension token (optional)</label>
+      <input id="token-input" type="text" autocomplete="off" spellcheck="false" placeholder="ext_…" />
+      <button id="activate-btn" class="primary">Activate</button>
+      <button id="cancel-pair-btn" class="link">Start over</button>
+      <p id="waiting-error" class="error" hidden></p>
+    </section>
+
+    <!-- View: Paired + active -->
+    <section id="view-active" hidden>
+      <div class="card">
+        <p class="card-label">Paired workspace</p>
+        <p id="org-hint" class="card-value">—</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Posts ingested this session</p>
+        <p id="posts-count" class="card-value">0</p>
+        <p id="last-sent" class="muted small">never</p>
+      </div>
+      <div class="row">
+        <label class="switch">
+          <input type="checkbox" id="enabled-toggle" checked />
+          <span>Ingestion enabled</span>
+        </label>
+      </div>
+      <p class="muted small">
+        Tako only reads posts on pages you open in this browser. It never posts, comments, joins,
+        or messages on your behalf.
+      </p>
+      <button id="unpair-btn" class="danger-link">Unpair extension</button>
+    </section>
+  </main>
+
+  <footer>
+    <span class="muted small">v<span id="version">0.1.0</span></span>
+    <a href="https://tako.software/privacy" target="_blank" rel="noopener">Privacy</a>
+  </footer>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
